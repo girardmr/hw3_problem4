@@ -31,6 +31,7 @@ data_matrix = data;
 
 for ii = 1:(length(channel))
     xe(ii) = 0.1953e-3*abs(channel(ii)); 
+    lat(ii) = 0.1953e-3*channel(ii); 
     d(ii) = (xe(ii)^2+depth^2)^0.5 + depth;
     time_to_point(ii) = d(ii)/speed;
 end
@@ -45,7 +46,7 @@ end
 
 
 end
-
+axial_array = [1:rows_data_matrix]*pixel_size_through_depth;
 
 for ll = 1:numel(delayed_channel)
     if isnan(delayed_channel(ll))==1
@@ -100,15 +101,17 @@ title('Magnitude of Fourier transform of beam 64, filtered');
 
 summed_channels = sum(delayed_channel,2);
 figure;
-imagesc(20*log10(abs(hilbert(summed_channels(:,:)))));
+imagesc(lat, axial_array,20*log10(abs(hilbert(summed_channels(:,:)))));
 colormap('gray');
+axis image;
 title('Anecoic cyst data unfiltered');
 
 for rf_line = 1:128
     filtered_beam(:,rf_line) = filtfilt(coeff,1,summed_channels(:,rf_line));
 end
 figure;
-imagesc(20*log10(abs(hilbert(filtered_beam(:,:)))));
+imagesc(lat, axial_array,20*log10(abs(hilbert(filtered_beam(:,:)))));
 colormap('gray');
+axis image;
 title('Anecoic cyst data filtered');
 
