@@ -98,6 +98,12 @@ title('Magnitude of Fourier transform of beam 64, filtered');
 
 %part d
 
+summed_channels = sum(delayed_channel,2);
+figure;
+imagesc(20*log10(abs(hilbert(summed_channels(:,:)))));
+colormap('gray');
+title('Anecoic cyst data unfiltered');
+
 for rf_line = 1:128
     filtered_beam(:,rf_line) = filtfilt(coeff,1,summed_channels(:,rf_line));
 end
