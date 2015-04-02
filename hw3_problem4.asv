@@ -88,7 +88,7 @@ title('Normalized FT, beam 64');
 w1 = 570/2353;
 w2 = 1790/2353;
 %width6dB = 660-480;
-coeff = fir1(40,[w1 w2]);
+coeff = fir1(40,[width6dB]/2353);
 filtered = filtfilt(coeff,1,beam_data);
 filtered_FT = abs(fftshift(fft(filtered)));
 filtered_FT_dB = 20*log10(filtered_FT);
